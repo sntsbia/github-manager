@@ -6,21 +6,21 @@
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.1-brightgreen.svg)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow.svg)
 
-Uma API RESTful construída com Spring Boot e Kotlin para gerenciar usuários e perfis (roles), populando a base inicial a partir da API pública do GitHub.
+API RESTful em Kotlin e Spring Boot para gerenciar usuários e perfis (roles), populando a base inicial a partir da API pública do GitHub.
 
-> **Este projeto foi criado com [start.spring.io](https://start.spring.io/) utilizando as dependências:**  
-> Spring Web, Spring Data JPA, H2 Database, Flyway Migration, Spring Security, OpenFeign, Validation.
+> **Este projeto foi criado com [start.spring.io](https://start.spring.io/) usando as dependências:**  
+> Spring Web, Spring Data JPA, H2 Database, Flyway Migration, Spring Security, OpenFeign, Validation
 
 ## 🚀 Funcionalidades
 
-- **Ingestão de Dados:** Busca e armazena usuários do GitHub (a princípio 30, mas pode ser alterado) na inicialização da aplicação.  
-- **Gerenciamento de Perfis:** Permite a criação de perfis (roles) como "Developer", "Admin" etc.
-- **Vinculação de Perfis:** Associa perfis criados aos usuários existentes.
-- **Listagem:** Endpoint para listar todos os usuários e seus perfis vinculados.
-- **Segurança:** Estrutura preparada para autenticação via Token JWT (ainda não implementada).
-- **Banco de Dados:** Utiliza H2 (em memória) com versionamento de schema via Flyway.
+- Ingestão automática de usuários do GitHub na inicialização (via OpenFeign)
+- Cadastro de usuários e perfis (roles)
+- Associação de perfis a usuários
+- Listagem de usuários com seus perfis vinculados
+- Console H2 para visualização do banco em memória
+- Estrutura pronta para autenticação JWT
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias
 
 - **Linguagem:** [Kotlin](https://kotlinlang.org/)
 - **Framework:** [Spring Boot](https://spring.io/projects/spring-boot)
@@ -34,7 +34,7 @@ Uma API RESTful construída com Spring Boot e Kotlin para gerenciar usuários e 
 
 ## ⚙️ Pré-requisitos
 
-- [JDK 21](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) ou superior.
+- [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) ou superior.
 - Uma IDE de sua preferência (IntelliJ IDEA, VS Code, etc).
 
 ## 🏁 Como Executar o Projeto
@@ -55,28 +55,33 @@ Uma API RESTful construída com Spring Boot e Kotlin para gerenciar usuários e 
         gradlew.bat bootRun
         ```
 
-3. A API estará disponível em `http://localhost:8080`.
+3. Acesse a API em `http://localhost:8080`
 
 4. **Acessando o Console do Banco de Dados H2:**
     - Com a aplicação rodando, acesse `http://localhost:8080/h2-console` no navegador.
     - Use a URL `jdbc:h2:mem:githubdb` para se conectar.
 
-## Endpoints da API
+5. **Criando um usuário válido**
+    - Com a aplicação rodando, faça uma requisição `POST` para `http://localhost:8080/auth/login` com o seguinte corpo:
 
-| Método | Path                     | Descrição                                      |
-|--------|--------------------------|------------------------------------------------|
-| GET    | [users](http://_vscodecontentref_/0)                 | Lista todos os usuários e seus perfis.         |
-| POST   | `/roles`                 | Cria um novo perfil (role).                    |
-| POST   | [users](http://_vscodecontentref_/1)                 | Cria um novo usuário.                          |
-| POST   | `/users/{userId}/roles`  | Vincula um perfil existente a um usuário.      |
+    ``` {json}
+    {
+        "username":"seu_usuario",
+        "password":"sua_senhar"
+    }
 
-## ⚠️ Pontos pendentes
+    ``` 
+    - Isso irá retornar um token JWT válido, que pode ser usado como Bearer Token nas próximas requisições
 
-* Implementar autenticação JWT.
+## Endpoints principais
 
-* Adicionar testes para listagem de usuários com seus perfis.
-
-* Implementar o serviço DataInitializerService para ingestão automática de usuários do GitHub.
+| Método | Caminho                   | Descrição                                      |
+|--------|---------------------------|------------------------------------------------|
+| POST   | `/auth/login`             | Gera um token JWT  |
+| GET    | [users](http://_vscodecontentref_/0)                  | Lista todos os usuários e seus perfis          |
+| POST   | [users](http://_vscodecontentref_/1)                  | Cria um novo usuário                           |
+| POST   | `/roles`                  | Cria um novo perfil (role)                     |
+| POST   | `/users/{userId}/roles`   | Vincula um perfil a um usuário                 |
 
 ## 📝 Convenção de Commits
 

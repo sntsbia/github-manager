@@ -52,7 +52,7 @@ class UsersController(
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{userId}/roles") // Defina o placeholder aqui
+    @PostMapping("/{userId}/roles")
     fun assignRole(@PathVariable("userId") userId: Long, @RequestBody request: AssignRolesRequest): ResponseEntity<Any> {
 
         println("Adicionando a role ${request.rolesId} para o usuário${userId}")

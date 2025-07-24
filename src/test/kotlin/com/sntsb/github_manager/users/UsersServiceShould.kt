@@ -18,7 +18,7 @@ import kotlin.test.assertTrue
 @ExtendWith(MockKExtension::class)
 class UsersServiceShould : BaseServiceShould() {
 
-    @MockK // Cria um mock do RolesRepository
+    @MockK
     private lateinit var rolesRepository: RolesRepository
 
     @InjectMockKs
