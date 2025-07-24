@@ -34,7 +34,7 @@ API RESTful em Kotlin e Spring Boot para gerenciar usuários e perfis (roles), p
 
 ## ⚙️ Pré-requisitos
 
-- [JDK 21](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) ou superior.
+- [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) ou superior.
 - Uma IDE de sua preferência (IntelliJ IDEA, VS Code, etc).
 
 ## 🏁 Como Executar o Projeto
@@ -60,6 +60,18 @@ API RESTful em Kotlin e Spring Boot para gerenciar usuários e perfis (roles), p
 4. **Acessando o Console do Banco de Dados H2:**
     - Com a aplicação rodando, acesse `http://localhost:8080/h2-console` no navegador.
     - Use a URL `jdbc:h2:mem:githubdb` para se conectar.
+
+5. **Criando um usuário válido**
+    - Com a aplicação rodando, faça uma requisição `POST` para `http://localhost:8080/auth/login` com o seguinte corpo:
+
+    ``` {json}
+    {
+        "username":"seu_usuario",
+        "password":"sua_senhar"
+    }
+
+    ``` 
+    - Isso irá retornar um token JWT válido, que pode ser usado como Bearer Token nas próximas requisições
 
 ## Endpoints principais
 
