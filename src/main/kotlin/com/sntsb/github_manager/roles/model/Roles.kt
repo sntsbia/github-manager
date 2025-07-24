@@ -6,11 +6,10 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import org.yaml.snakeyaml.constructor.Constructor
 
 @Entity
 @Table(name = "roles")
-class Roles{
+class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
@@ -22,6 +21,9 @@ class Roles{
         this.name = name
     }
 
-    constructor()
+    constructor(id: Long, name: String) {
+        this.id = id
+        this.name = name
+    }
 
 }

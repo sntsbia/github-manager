@@ -5,12 +5,12 @@ import com.sntsb.github_manager.roles.repository.RolesRepository
 import org.springframework.stereotype.Service
 
 @Service
-class RolesService (
+class RolesService(
     private val rolesRepository: RolesRepository
 ) {
-    fun create(rolesName: String): Roles {
+    fun create(rolesName: String): Roles? {
         val newRoles = Roles(rolesName)
 
-        return rolesRepository.save<Roles>(newRoles)
+        return rolesRepository.save<Roles?>(newRoles)
     }
 }

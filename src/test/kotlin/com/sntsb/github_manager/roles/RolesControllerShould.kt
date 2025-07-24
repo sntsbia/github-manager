@@ -13,12 +13,12 @@ class RolesControllerShould : BaseControllerShould() {
     @Test
     @WithMockUser
     fun createNewRole() {
-        val newProfileRequest = CreateRolesRequest(name = "Test Engineer")
+        val newRoleRequest = CreateRolesRequest(name = "Test Engineer")
 
         mockMvc.post("/roles") {
             with(csrf())
             contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(newProfileRequest)
+            content = objectMapper.writeValueAsString(newRoleRequest)
         }
             .andExpect {
                 status { isCreated() }
