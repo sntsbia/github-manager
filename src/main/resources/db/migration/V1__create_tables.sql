@@ -1,0 +1,17 @@
+CREATE TABLE roles (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    login VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE users_roles (
+    id BIGSERIAL PRIMARY KEY,
+    users_id BIGINT NOT NULL,
+    roles_id BIGINT NOT NULL,
+    FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE
+);
