@@ -1,8 +1,5 @@
 package com.sntsb.github_manager.util
 
-import io.jsonwebtoken.SignatureAlgorithm
-import java.util.Date
-
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
