@@ -39,10 +39,12 @@ class SecurityConfig {
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers("/", "/auth/login", "/h2-console/**").permitAll()
+                    .requestMatchers("/favicon.ico", "/", "/auth/login", "/h2-console/**").permitAll()
                     .anyRequest().authenticated()
             }
-            .headers { it.frameOptions(Customizer.withDefaults()) }
+            .headers { headers ->
+                headers.frameOptions { it.sameOrigin() }
+            }
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
