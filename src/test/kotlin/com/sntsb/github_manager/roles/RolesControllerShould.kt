@@ -19,11 +19,10 @@ class RolesControllerShould : BaseControllerShould() {
             with(csrf())
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(newRoleRequest)
+        }.andExpect {
+            status { isCreated() }
+            jsonPath("$.id") { exists() }
+            jsonPath("$.name") { value("Test Engineer") }
         }
-            .andExpect {
-                status { isCreated() }
-                jsonPath("$.id") { exists() }
-                jsonPath("$.name") { value("Test Engineer") }
-            }
     }
 }
