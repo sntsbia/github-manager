@@ -17,7 +17,11 @@ class JwtRequestFilter(
     private val jwtUtil: JwtUtil
 ) : OncePerRequestFilter() {
 
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
         val authorizationHeader = request.getHeader("Authorization")
 
         var username: String? = null

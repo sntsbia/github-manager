@@ -9,5 +9,5 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 class GithubManagerApplication
 
 fun main(args: Array<String>) {
-	runApplication<GithubManagerApplication>(*args)
+    runApplication<GithubManagerApplication>(*args)
 }

@@ -6,8 +6,6 @@ import com.sntsb.github_manager.users.model.dto.CreateUsersRequest
 import com.sntsb.github_manager.users.repository.UsersRepository
 import com.sntsb.github_manager.users.service.UsersService
 import com.sntsb.github_manager.utils.BaseControllerShould
-import io.mockk.every
-import io.mockk.mockk
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
@@ -36,15 +34,15 @@ class UsersControllerShould : BaseControllerShould() {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(newUserRequest)
         }.andExpect {
-                status { isCreated() }
-                jsonPath("$.id") { exists() }
-                jsonPath("$.login") { value("User Test") }
-            }
+            status { isCreated() }
+            jsonPath("$.id") { exists() }
+            jsonPath("$.login") { value("User Test") }
+        }
     }
 
     @Test
     @WithMockUser
-    fun getAllUsers(){
+    fun getAllUsers() {
 
         usersRepository.save(Users(name = "User Test"))
 
@@ -55,7 +53,7 @@ class UsersControllerShould : BaseControllerShould() {
             jsonPath("$") { isArray() }
             jsonPath("$[0].login") { value("User Test") }
         }
-        
+
     }
 
     @Test
@@ -87,7 +85,7 @@ class UsersControllerShould : BaseControllerShould() {
 
         user.id?.let {
 
-            usersService.assignRoles(it,1L)
+            usersService.assignRoles(it, 1L)
         }
 
         mockMvc.get("/users") {
@@ -102,6 +100,5 @@ class UsersControllerShould : BaseControllerShould() {
 
     }
 
-    
 
 }

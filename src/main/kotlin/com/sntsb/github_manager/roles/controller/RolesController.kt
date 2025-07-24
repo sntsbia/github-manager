@@ -1,15 +1,10 @@
 package com.sntsb.github_manager.roles.controller
 
-import com.sntsb.github_manager.roles.model.Roles
 import com.sntsb.github_manager.roles.model.dto.CreateRolesRequest
 import com.sntsb.github_manager.roles.service.RolesService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/roles")

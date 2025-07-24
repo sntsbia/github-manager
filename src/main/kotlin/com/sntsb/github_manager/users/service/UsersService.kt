@@ -19,22 +19,22 @@ class UsersService(
         return Result.success(usersRepository.save<Users?>(newUsers))
     }
 
-    fun getAll(): Result<List<Users>>{
+    fun getAll(): Result<List<Users>> {
 
         return Result.success(usersRepository.findAll())
     }
 
     @Transactional
-    fun assignRoles(userId: Long, rolesId: Long) : Result<Users?> {
+    fun assignRoles(userId: Long, rolesId: Long): Result<Users?> {
         try {
 
-            val users = usersRepository.findById(userId).orElseThrow{ Exception("Usuário não encontrado") }
+            val users = usersRepository.findById(userId).orElseThrow { Exception("Usuário não encontrado") }
             val roles = rolesRepository.findById(rolesId).orElseThrow { Exception("Role não encontrada") }
 
             users.roles.add(roles)
 
             return Result.success(usersRepository.save<Users?>(users))
-        } catch( exception: Exception) {
+        } catch (exception: Exception) {
             return Result.failure(exception)
         }
 

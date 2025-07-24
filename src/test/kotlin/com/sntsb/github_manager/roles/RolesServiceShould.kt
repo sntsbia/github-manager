@@ -12,7 +12,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -29,7 +29,7 @@ class RolesServiceShould : BaseServiceShould() {
     private lateinit var userService: UsersService
 
     @Test
-    fun getAllUsersWithRolesSuccessfully(){
+    fun getAllUsersWithRolesSuccessfully() {
 
         val users = Users(id = 1L, login = "testuser")
         val roles = Roles(id = 10L, name = "Developer")
