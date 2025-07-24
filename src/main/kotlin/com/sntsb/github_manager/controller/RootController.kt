@@ -14,7 +14,6 @@ class RootController {
     fun getRoot(): WelcomeResponse {
         val publicEndpoints = listOf(
             ApiEndpoint("POST", "/auth/login", "Gera um token de autenticação JWT."),
-            ApiEndpoint("GET", "/h2-console", "Acessa o console do banco de dados em memória.")
         )
 
         val protectedEndpoints = listOf(
