@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service
 class RolesService(
     private val rolesRepository: RolesRepository
 ) {
-    fun create(rolesName: String): Roles? {
+    fun create(rolesName: String): Result<Roles?> {
         val newRoles = Roles(rolesName)
 
-        return rolesRepository.save<Roles?>(newRoles)
+        return Result.success(rolesRepository.save<Roles?>(newRoles))
     }
 }
