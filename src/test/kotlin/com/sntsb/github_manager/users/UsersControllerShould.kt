@@ -21,6 +21,9 @@ class UsersControllerShould : BaseControllerShould() {
     @Autowired
     private lateinit var usersRepository: UsersRepository
 
+    @Autowired
+    private lateinit var usersService: UsersService
+
 
     @Test
     @WithMockUser
@@ -61,7 +64,7 @@ class UsersControllerShould : BaseControllerShould() {
 
         val user = usersRepository.save(Users(name = "User Test"))
         val assignRequest = AssignRolesRequest(rolesId = 1L)
-        
+
         mockMvc.post("/users/${user.id}/roles") {
             with(csrf())
             contentType = MediaType.APPLICATION_JSON
@@ -72,7 +75,33 @@ class UsersControllerShould : BaseControllerShould() {
             jsonPath("$.roles") { isArray() }
             jsonPath("$.roles[0].id") { value(assignRequest.rolesId) }
         }
-        
+
     }
+
+    @Test
+    @WithMockUser
+    fun getAllUsersWithRoles() {
+
+        val user = usersRepository.save(Users(name = "User Test"))
+        val assignRequest = AssignRolesRequest(rolesId = 1L)
+
+        user.id?.let {
+
+            usersService.assignRoles(it,1L)
+        }
+
+        mockMvc.get("/users") {
+            with(csrf())
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$") { isArray() }
+            jsonPath("$[0].login") { value("User Test") }
+            jsonPath("$[0].roles") { isArray() }
+            jsonPath("$[0].roles[0].id") { value(assignRequest.rolesId) }
+        }
+
+    }
+
+    
 
 }
