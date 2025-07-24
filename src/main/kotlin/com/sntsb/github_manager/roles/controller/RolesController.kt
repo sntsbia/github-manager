@@ -19,13 +19,19 @@ class RolesController(private val rolesService: RolesService) {
 
         println("Criando uma nova role com o nome: ${roleRequest.name}")
 
-        val newRole = rolesService.create(roleRequest.name)
+        val newRoleResult = rolesService.create(roleRequest.name)
 
-        return newRole?.let {
-            ResponseEntity.status(HttpStatus.CREATED).body(newRole)
-        } ?: run {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
+        if(newRoleResult.isFailure){
+            newRoleResult.exceptionOrNull()?.let{
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(it.message)
+            }
+        } else{
+            newRoleResult.getOrNull()?.let{ newUser->
+                ResponseEntity.status(HttpStatus.CREATED).body(newUser)
+            }
         }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
 
     }
 }

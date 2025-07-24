@@ -7,14 +7,15 @@ import jakarta.persistence.*
 @Table(name = "users")
 class Users {
     @Id
-    var id: Long = 0
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var login: String = ""
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "user_roles",
+        name = "users_roles",
         joinColumns = [JoinColumn(name = "users_id")],
         inverseJoinColumns = [JoinColumn(name = "roles_id")]
     )
