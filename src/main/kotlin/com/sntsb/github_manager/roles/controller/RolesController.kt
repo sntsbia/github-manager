@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -15,23 +16,19 @@ import org.springframework.web.bind.annotation.RestController
 class RolesController(private val rolesService: RolesService) {
 
     @PostMapping
-    fun createRole(@RequestBody roleRequest: CreateRolesRequest): ResponseEntity<Roles> {
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createRole(@RequestBody roleRequest: CreateRolesRequest): ResponseEntity<Any> {
 
-        println("Criando uma nova role com o nome: ${roleRequest.name}")
+        return rolesService.create(roleRequest.name).fold(
 
-        val newRoleResult = rolesService.create(roleRequest.name)
+            onSuccess = { newRole ->
+                ResponseEntity.status(HttpStatus.CREATED).body(newRole)
+            },
 
-        if(newRoleResult.isFailure){
-            newRoleResult.exceptionOrNull()?.let{
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(it.message)
+            onFailure = { exception ->
+                val errorMessage = exception.message ?: "Ocorreu um erro desconhecido"
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mapOf("error" to errorMessage))
             }
-        } else{
-            newRoleResult.getOrNull()?.let{ newUser->
-                ResponseEntity.status(HttpStatus.CREATED).body(newUser)
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
-
+        )
     }
 }

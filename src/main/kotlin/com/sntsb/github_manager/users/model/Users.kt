@@ -7,7 +7,7 @@ import jakarta.persistence.*
 @Table(name = "users")
 class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     var id: Long? = null
 
     @Column(nullable = false, unique = true)
@@ -21,12 +21,12 @@ class Users {
     )
     var roles: MutableSet<Roles> = mutableSetOf()
 
-    constructor(name: String) {
-        this.login = name
+    constructor(id: Long, login: String) {
+        this.id = id
+        this.login = login
     }
 
-    constructor(id: Long, name: String) {
-        this.id = id
+    constructor(name: String) {
         this.login = name
     }
 
