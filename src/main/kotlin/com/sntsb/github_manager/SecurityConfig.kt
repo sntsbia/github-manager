@@ -17,7 +17,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
-
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
@@ -36,16 +35,27 @@ class SecurityConfig {
     fun securityFilterChain(http: HttpSecurity, jwtRequestFilter: JwtRequestFilter): SecurityFilterChain {
         http
             .csrf { it.disable() }
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers("/favicon.ico", "/", "/auth/login", "/h2-console/**").permitAll()
+                    .requestMatchers(
+                        "/",
+                        "/auth/login",
+                        "/h2-console/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html" 
+                    ).permitAll()
                     .anyRequest().authenticated()
             }
+
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+
             .headers { headers ->
                 headers.frameOptions { it.sameOrigin() }
             }
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
